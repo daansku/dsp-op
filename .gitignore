@@ -1,0 +1,12 @@
+*.csv
+.DS_Store
+Desktop.ini
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+*.pyc
+venv
+node_modules
+.sass-cache
