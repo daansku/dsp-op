@@ -6,91 +6,102 @@ Dest = Destination account
 w = Time window (1h, 24h, or 7d)
 Lifespan = Hours since the account's very first transaction in that specific role
 
-RAW DATA AND METADATA
-type: The type of transaction (Transfer, Cash-out, etc.)
-category: The purpose of the transaction
-orig: ID number for the sender
-dest: ID number for the receiver
-old_balance: Sender's balance before the transaction
-new_balance: Sender's balance after the transaction
-is_fraud: 1 if fraud, 0 if not
-payment_method: How the payment was made
-merchant_info.merchant_id: ID for the merchant
-merchant_info.category: Merchant industry category
-merchant_info.risk_level: Risk score for the merchant
-merchant_info.avg_transaction: Merchant's normal transaction size
-datetime: Timestamp of the transaction
-city_state: Location of the transaction
-postcode: Postal code of the transaction
-device: Device used
-ip_subnet: Network routing identifier
+RAW DATA AND METADATA (Was given)
+1. type: The type of transaction
+2. category: The purpose of the transaction
+3. orig: ID for the sender
+4. dest: ID for the receiver
+5. old_balance: Orig balance before the transaction
+6. new_balance: Orig balance after the transaction
+7. is_fraud: 1 if fraud, 0 if legitimate
+8. payment_method: How the payment was made
+9. merchant_info.merchant_id: ID for the merchant
+10. merchant_info.category: Merchant category
+11. merchant_info.risk_level: Risk for the merchant
+12. merchant_info.avg_transaction: Merchant's average transaction size
+13. datetime: Timestamp of the transaction
+14. city_state: Location of the transaction
+15. postcode: Postal code of the transaction
+16. device: Device used
+17. ip_subnet: Network routing identifier
+
+ENGINEERED FEATURES
 
 TEMPORAL ENCODINGS (Cyclical time features)
-hour_sin: sin(2 * pi * hour / 24)
-hour_cos: cos(2 * pi * hour / 24)
-day_sin: sin(2 * pi * day / 7)
-day_cos: cos(2 * pi * day / 7)
-month_sin: sin(2 * pi * month / 12)
-month_cos: cos(2 * pi * month / 12)
+1. hour_sin: sin(2 * pi * hour / 24)
+2. hour_cos: cos(2 * pi * hour / 24)
+3. day_sin: sin(2 * pi * day / 7)
+4. day_cos: cos(2 * pi * day / 7)
+5. month_sin: sin(2 * pi * month / 12)
+6. month_cos: cos(2 * pi * month / 12)
 
 CORE AMOUNT
-amount: The dollar amount of the current transaction
+7. amount: The dollar amount of the current transaction
 
 ROLLING WINDOW METRICS (Calculated for w = 1h, 24h, 7d)
 
 Rolling Counts:
-orig_count_as_orig_w: Number of prior transactions sent by Orig in the past w window
-orig_count_as_dest_w: Number of prior transactions received by Orig in the past w window
-dest_count_as_orig_w: Number of prior transactions sent by Dest in the past w window
-dest_count_as_dest_w: Number of prior transactions received by Dest in the past w window
+8., 9., 10. orig_count_as_orig_w: Number of prior transactions sent by Orig in the past w window
+11., 12., 13. orig_count_as_dest_w: Number of prior transactions received by Orig in the past w window
+14., 15., 16. dest_count_as_orig_w: Number of prior transactions sent by Dest in the past w window
+17., 18., 19. dest_count_as_dest_w: Number of prior transactions received by Dest in the past w window
 
 Rolling Means (Averages):
-orig_mean_amt_as_orig_w: Average amount sent by Orig in the past w window
-orig_mean_amt_as_dest_w: Average amount received by Orig in the past w window
-dest_mean_amt_as_orig_w: Average amount sent by Dest in the past w window
-dest_mean_amt_as_dest_w: Average amount received by Dest in the past w window
+20., 21., 22. orig_mean_amt_as_orig_w: Average amount sent by Orig in the past w window
+23., 24., 25. orig_mean_amt_as_dest_w: Average amount received by Orig in the past w window
+26., 27., 28. dest_mean_amt_as_orig_w: Average amount sent by Dest in the past w window
+29., 30., 31. dest_mean_amt_as_dest_w: Average amount received by Dest in the past w window
 
 Rolling Fan-out (Unique Destinations):
-orig_unique_dest_w: Number of unique accounts Orig sent money to in the past w window
-dest_unique_dest_w: Number of unique accounts Dest sent money to in the past w window
+32., 33., 34. orig_unique_dest_w: Number of unique accounts Orig sent money to in the past w window
+35., 36., 37. dest_unique_dest_w: Number of unique accounts Dest sent money to in the past w window
 
 Rolling Fan-in (Unique Originators):
-orig_unique_orig_w: Number of unique accounts Orig received money from in the past w window
-dest_unique_orig_w: Number of unique accounts Dest received money from in the past w window
+38., 39., 40. orig_unique_orig_w: Number of unique accounts Orig received money from in the past w window
+41., 42., 43. dest_unique_orig_w: Number of unique accounts Dest received money from in the past w window
 
 ALL-TIME HISTORICAL BASELINES
 
 All-Time Counts:
-orig_all_time_count_as_orig: Total transactions sent by Orig since account creation
-orig_all_time_count_as_dest: Total transactions received by Orig since account creation
-dest_all_time_count_as_orig: Total transactions sent by Dest since account creation
-dest_all_time_count_as_dest: Total transactions received by Dest since account creation
+44. orig_all_time_count_as_orig: Total transactions sent by Orig since account creation
+45. orig_all_time_count_as_dest: Total transactions received by Orig since account creation
+46. dest_all_time_count_as_orig: Total transactions sent by Dest since account creation
+47. dest_all_time_count_as_dest: Total transactions received by Dest since account creation
 
 Usual Amount Per Transaction:
-orig_usual_amt_as_orig: Total amount sent by Orig / Total transactions sent by Orig
-orig_usual_amt_as_dest: Total amount received by Orig / Total transactions received by Orig
-dest_usual_amt_as_orig: Total amount sent by Dest / Total transactions sent by Dest
-dest_usual_amt_as_dest: Total amount received by Dest / Total transactions received by Dest
+48. orig_usual_amt_as_orig: Total amount sent by Orig / Total transactions sent by Orig
+49. orig_usual_amt_as_dest: Total amount received by Orig / Total transactions received by Orig
+50. dest_usual_amt_as_orig: Total amount sent by Dest / Total transactions sent by Dest
+51. dest_usual_amt_as_dest: Total amount received by Dest / Total transactions received by Dest
 
 Usual Transaction Velocity (Counts per Hour):
-orig_usual_count_per_hour_as_orig: Total transactions sent by Orig / Orig's lifespan in hours
-orig_usual_count_per_hour_as_dest: Total transactions received by Orig / Orig's lifespan in hours
-dest_usual_count_per_hour_as_orig: Total transactions sent by Dest / Dest's lifespan in hours
-dest_usual_count_per_hour_as_dest: Total transactions received by Dest / Dest's lifespan in hours
+52. orig_usual_count_per_hour_as_orig: Total transactions sent by Orig / Orig's lifespan in hours
+53. orig_usual_count_per_hour_as_dest: Total transactions received by Orig / Orig's lifespan in hours
+54. dest_usual_count_per_hour_as_orig: Total transactions sent by Dest / Dest's lifespan in hours
+55. dest_usual_count_per_hour_as_dest: Total transactions received by Dest / Dest's lifespan in hours
 
 Usual Volume Velocity (Dollars per Hour):
-orig_usual_volume_per_hour_as_orig: Total amount sent by Orig / Orig's lifespan in hours
-orig_usual_volume_per_hour_as_dest: Total amount received by Orig / Orig's lifespan in hours
-dest_usual_volume_per_hour_as_orig: Total amount sent by Dest / Dest's lifespan in hours
-dest_usual_volume_per_hour_as_dest: Total amount received by Dest / Dest's lifespan in hours
+56. orig_usual_volume_per_hour_as_orig: Total amount sent by Orig / Orig's lifespan in hours
+57. orig_usual_volume_per_hour_as_dest: Total amount received by Orig / Orig's lifespan in hours
+58. dest_usual_volume_per_hour_as_orig: Total amount sent by Dest / Dest's lifespan in hours
+59. dest_usual_volume_per_hour_as_dest: Total amount received by Dest / Dest's lifespan in hours
 
 TEMPORAL STATE METRICS
 
-orig_time_since_last_tx_as_orig: Seconds since Orig's last transaction as a sender
-orig_time_since_last_tx_as_dest: Seconds since Orig's last transaction as a receiver
-dest_time_since_last_tx_as_orig: Seconds since Dest's last transaction as a sender
-dest_time_since_last_tx_as_dest: Seconds since Dest's last transaction as a receiver
+60. orig_time_since_last_tx_as_orig: Seconds since Orig's last transaction as a sender
+61. orig_time_since_last_tx_as_dest: Seconds since Orig's last transaction as a receiver
+62. dest_time_since_last_tx_as_orig: Seconds since Dest's last transaction as a sender
+63. dest_time_since_last_tx_as_dest: Seconds since Dest's last transaction as a receiver
 
 PAIRWISE EDGES
-pair_count_forward: Total number of past transactions sent from this Orig to this Dest
-pair_count_reverse: Total number of past transactions sent from this Dest back to this Orig
+64. pair_count_forward: Total number of past transactions sent from this Orig to this Dest
+65. pair_count_reverse: Total number of past transactions sent from this Dest back to this Orig
+
+RELATIVE AMOUNT RATIOS
+66. amount_per_orig_usual_amt_as_orig: Current transaction amount / Orig average amount sent
+67. amount_per_orig_usual_amt_as_dest: Current transaction amount / Orig average amount received
+68. amount_per_dest_usual_amt_as_orig: Current transaction amount / Dest average amount sent
+69. amount_per_dest_usual_amt_as_dest: Current transaction amount / Dest average amount received
+
+STRUCTURING FLAGS
+70. flag_close_to_limit: Flag (1 if true, 0 if false) indicating if the amount is between $8,500 and $10,000
