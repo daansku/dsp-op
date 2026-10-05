@@ -74,13 +74,13 @@ Usual Amount Per Transaction:
 50. dest_usual_amt_as_orig: Total amount sent by Dest / Total transactions sent by Dest
 51. dest_usual_amt_as_dest: Total amount received by Dest / Total transactions received by Dest
 
-Usual Transaction Velocity (Counts per Hour):
-52. orig_usual_count_per_hour_as_orig: Total transactions sent by Orig / Orig's lifespan in hours
-53. orig_usual_count_per_hour_as_dest: Total transactions received by Orig / Orig's lifespan in hours
-54. dest_usual_count_per_hour_as_orig: Total transactions sent by Dest / Dest's lifespan in hours
-55. dest_usual_count_per_hour_as_dest: Total transactions received by Dest / Dest's lifespan in hours
+Usual Transaction Velocity (Counts per hour):
+52. orig_usual_count_per_hour_as_orig: Number of transactions sent by Orig / Orig's lifespan in hours
+53. orig_usual_count_per_hour_as_dest: Number of transactions received by Orig / Orig's lifespan in hours
+54. dest_usual_count_per_hour_as_orig: Number of transactions sent by Dest / Dest's lifespan in hours
+55. dest_usual_count_per_hour_as_dest: Number of transactions received by Dest / Dest's lifespan in hours
 
-Usual Volume Velocity (Dollars per Hour):
+Usual Volume Velocity (Dollars per hour):
 56. orig_usual_volume_per_hour_as_orig: Total amount sent by Orig / Orig's lifespan in hours
 57. orig_usual_volume_per_hour_as_dest: Total amount received by Orig / Orig's lifespan in hours
 58. dest_usual_volume_per_hour_as_orig: Total amount sent by Dest / Dest's lifespan in hours
