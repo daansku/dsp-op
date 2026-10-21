@@ -1,0 +1,4 @@
+data/
+scores/
+*.partial.pt
+__pycache__/
